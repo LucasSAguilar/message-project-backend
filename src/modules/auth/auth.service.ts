@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import LoginUserDto from './dto/loginUser.dto';
+import AuthUserDto from './dto/authUser.dto';
 import * as jwt from 'jsonwebtoken';
-import responseUserLoginDto from './interfaces/responseUserLogin.interface';
-import varifyLoginUserInterface from './interfaces/userLoggend.interface';
+import responseUserAuthDto from './interfaces/responseUserAuth.interface';
+import VerifyAuthUserInterface from './interfaces/verifyAuthUserInterface.interface';
 
 @Injectable()
-export class LoginService {
-  authenticateUser(userData: LoginUserDto): responseUserLoginDto {
+export class AuthService {
+  authenticateUser(userData:AuthUserDto): responseUserAuthDto {
     const generated_token = jwt.sign(userData, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
@@ -17,7 +17,7 @@ export class LoginService {
     };
   }
 
-  verifyToken(token: string): varifyLoginUserInterface {
+  verifyToken(token: string): VerifyAuthUserInterface {
     try {
       jwt.verify(token, process.env.JWT_SECRET);
       return {
