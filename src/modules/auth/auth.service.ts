@@ -21,12 +21,12 @@ export class AuthService {
     try {
       jwt.verify(token, process.env.JWT_SECRET);
       return {
-        isLoggend: true,
+        success: true,
         message: 'Token is valid',
       };
     } catch (error) {
       return {
-        isLoggend: false,
+        success: false,
         message: 'Token is invalid: ' + error.message,
       };
     }

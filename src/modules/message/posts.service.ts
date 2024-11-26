@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
-export class MessageService {
+export class PostService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async returnAllMessages() {
+  async returnAllPosts() {
     const db = this.databaseService.getDb();
 
-    const messages = await db.collection('messages').find().toArray();
+    const posts = await db.collection('posts').find().toArray();
 
-    return messages;
+    return posts;
   }
 }

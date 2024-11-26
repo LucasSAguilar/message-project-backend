@@ -1,4 +1,4 @@
 export default interface VerifyAuthUserInterface {
-    isLoggend: boolean;
+    success: boolean;
     message: string;
 }

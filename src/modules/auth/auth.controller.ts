@@ -20,7 +20,7 @@ export class AuthController {
   ): VerifyAuthUserInterface {
     if (!token) {
       return {
-        isLoggend: false,
+        success: false,
         message: 'No tokens reported',
       };
     }
