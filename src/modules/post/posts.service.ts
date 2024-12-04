@@ -9,7 +9,7 @@ import ResponseInsertPostInterface from './interfaces/ResponseInsertPost.interfa
 export class PostService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async returnAllPosts(): Promise<ResponseAllPostsInterface[]> {
+  async returnAllPosts(): Promise<ResponseAllPostsInterface> {
     const db = this.databaseService.getDb();
 
     const posts = await db
@@ -18,7 +18,11 @@ export class PostService {
       .sort({ createdAt: -1 })
       .toArray();
 
-    return posts;
+    return {
+      success: true,
+      message: 'Posts retornados com sucesso',
+      posts,
+    };
   }
 
   async verifyNewPosts(timestamp: string): Promise<HasNewPostsInterface> {

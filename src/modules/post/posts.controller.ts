@@ -1,10 +1,9 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { PostService } from './posts.service';
 import HasNewPostsInterface from './interfaces/hasNewPosts.interface';
-import { AuthGuard } from '../auth/auth.guard';
 import PostDto from './dto/post.dto';
+import ResponseAllPostsInterface from './interfaces/ResponseAllPosts.interface';
 
-// @UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
@@ -35,7 +34,8 @@ export class PostController {
   @Get('all')
   async getAllPosts() {
     try {
-      const response = await this.postService.returnAllPosts();
+      const response: ResponseAllPostsInterface =
+        await this.postService.returnAllPosts();
       return response;
     } catch (error) {
       return error;
