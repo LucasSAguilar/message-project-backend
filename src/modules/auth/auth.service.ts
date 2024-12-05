@@ -6,15 +6,21 @@ import VerifyAuthUserInterface from './interfaces/verifyAuthUserInterface.interf
 
 @Injectable()
 export class AuthService {
-  authenticateUser(userData:AuthUserDto): responseUserAuthDto {
-    const generated_token = jwt.sign(userData, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+  authenticateUser(userData: AuthUserDto): responseUserAuthDto {
+    try {
+      const payload = { ...userData };
+      const generated_token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      });
 
-    return {
-      ...userData,
-      token: generated_token,
-    };
+      return {
+        ok: true,
+        ...userData,
+        token: generated_token,
+      };
+    } catch (error) {
+      throw new Error(error.message || 'Erro ao gerar token de autenticação');
+    }
   }
 
   verifyToken(token: string): VerifyAuthUserInterface {
