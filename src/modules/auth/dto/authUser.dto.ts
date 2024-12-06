@@ -3,11 +3,11 @@ import { IsString, MinLength, IsNotEmpty } from 'class-validator';
 export default class AuthUserDto {
   
   @IsString()
-  @MinLength(4, { message: 'name must be longer than or equal to 4 characters' })
-  @IsNotEmpty({ message: 'name should not be empty' })
+  @MinLength(4, { message: 'Nome deve conter no mínimo 4 caracteres' })
+  @IsNotEmpty({ message: 'Nome não pode ser vazio' })
   name: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'role should not be empty' })
+  @IsNotEmpty({ message: 'Função não pode estar vazio' })
   role: string;
 }
