@@ -7,27 +7,32 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private db: any;
 
   async onModuleInit() {
-    const uri = process.env.DB_CONNECTION_STRING;
-    
-    if (!uri) {
-      throw new Error('DB_CONNECTION_STRING is not defined in environment variables');
+    try {
+      const uri = process.env.DB_CONNECTION_STRING;
+      this.client = new MongoClient(uri);
+      await this.client.connect();
+      this.db = this.client.db();
+    } catch (error: any) {
+      throw new Error('Ocorreu um erro ao inicializar o banco de dados');
     }
-
-    this.client = new MongoClient(uri);
-    
-    await this.client.connect();
-    this.db = this.client.db();
-    
   }
 
   getDb() {
+    if (!this.db) {
+      throw new Error('Banco de dados não inicializado. Verifique a conexão.');
+    }
     return this.db;
   }
 
   async onModuleDestroy() {
     if (this.client) {
-      await this.client.close();
-      console.log('Conexão com MongoDB fechada');
+      try {
+        await this.client.close();
+      } catch (error) {
+        throw new Error('Erro durante o encerramento do banco de dados.');
+      }
+    } else {
+      console.warn('Conexão inexistente');
     }
   }
 }

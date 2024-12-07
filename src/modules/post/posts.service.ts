@@ -37,8 +37,6 @@ export class PostService {
         .sort({ createdAt: -1 })
         .toArray();
 
-      console.log(posts);
-
       if (posts.length > 0) {
         return {
           success: true,
@@ -68,14 +66,12 @@ export class PostService {
     try {
       const db = this.databaseService.getDb();
       await db.collection('posts').insertOne(newPost);
-
       return {
         success: true,
         message: 'Post inserido com sucesso',
         post: newPost,
       };
     } catch (error) {
-      console.log(`Ocorreu um erro ${error}`);
       return {
         success: false,
         message: `Ocorreu um erro: ${error.message}`,
