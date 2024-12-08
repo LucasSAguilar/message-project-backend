@@ -27,12 +27,12 @@ export class AuthService {
     try {
       jwt.verify(token, process.env.JWT_SECRET);
       return {
-        success: true,
+        ok: true,
         message: 'Token is valid',
       };
     } catch (error) {
       return {
-        success: false,
+        ok: false,
         message: 'Token is invalid: ' + error.message,
       };
     }

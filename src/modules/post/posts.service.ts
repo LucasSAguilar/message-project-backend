@@ -10,19 +10,25 @@ export class PostService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async returnAllPosts(): Promise<ResponseAllPostsInterface> {
-    const db = this.databaseService.getDb();
-
-    const posts = await db
-      .collection('posts')
-      .find()
-      .sort({ createdAt: -1 })
-      .toArray();
-
-    return {
-      success: true,
-      message: 'Posts retornados com sucesso',
-      posts,
-    };
+    try {
+      const db = this.databaseService.getDb();
+      const posts = await db
+        .collection('posts')
+        .find()
+        .sort({ createdAt: -1 })
+        .toArray();
+      return {
+        ok: true,
+        message: 'Posts retornados com sucesso',
+        posts,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        message: error.message || 'Ocorreu um erro ao localizar os posts',
+        posts: [],
+      };
+    }
   }
 
   async verifyNewPosts(timestamp: string): Promise<HasNewPostsInterface> {
@@ -39,7 +45,7 @@ export class PostService {
 
       if (posts.length > 0) {
         return {
-          success: true,
+          ok: true,
           hasPost: true,
           posts,
           message: 'Há posts novos',
@@ -47,14 +53,14 @@ export class PostService {
       }
 
       return {
-        success: true,
+        ok: true,
         hasPost: false,
         message: 'Não há posts novos',
         posts,
       };
     } catch (error) {
       return {
-        success: false,
+        ok: false,
         hasPost: true,
         message: `Ocorreu um erro: ${error.message}`,
         posts: [],
@@ -67,13 +73,13 @@ export class PostService {
       const db = this.databaseService.getDb();
       await db.collection('posts').insertOne(newPost);
       return {
-        success: true,
+        ok: true,
         message: 'Post inserido com sucesso',
         post: newPost,
       };
     } catch (error) {
       return {
-        success: false,
+        ok: false,
         message: `Ocorreu um erro: ${error.message}`,
         post: newPost,
       };

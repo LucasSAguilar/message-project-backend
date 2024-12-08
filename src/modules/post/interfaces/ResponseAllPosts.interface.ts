@@ -1,7 +1,7 @@
 import PostInterface from "./PostInterface";
 
 export default interface ResponseAllPostsInterface {
-  success: boolean;
+  ok: boolean;
   message: string;
   posts: PostInterface[];
 }

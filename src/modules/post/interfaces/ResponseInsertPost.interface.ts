@@ -1,7 +1,7 @@
 import PostDto from "../dto/post.dto";
 
 export default interface ResponseInsertPostInterface {
-    success: boolean;
+    ok: boolean;
     message: string;
     post: PostDto;
 }

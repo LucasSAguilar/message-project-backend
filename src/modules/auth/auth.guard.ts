@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     if (!authHeader) {
       throw new HttpException(
         {
-          success: false,
+          ok: false,
           message: 'Não foi possível confirmar sua autorização',
         },
         HttpStatus.UNAUTHORIZED,
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } catch (error) {
       throw new HttpException(
-        { success: false, message: 'Token inválido ou expirado' },
+        { ok: false, message: 'Token inválido ou expirado' },
         HttpStatus.UNAUTHORIZED,
       );
     }

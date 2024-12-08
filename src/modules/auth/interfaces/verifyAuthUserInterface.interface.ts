@@ -1,4 +1,4 @@
 export default interface VerifyAuthUserInterface {
-    success: boolean;
+    ok: boolean;
     message: string;
 }

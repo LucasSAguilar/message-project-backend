@@ -1,7 +1,7 @@
 import PostInterface from "./PostInterface";
 
 export default interface HasNewPostsInterface {
-    success: boolean;
+    ok: boolean;
     hasPost: boolean;
     message: string;
     posts: PostInterface[];

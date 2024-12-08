@@ -3,13 +3,14 @@ import { PostService } from './posts.service';
 import HasNewPostsInterface from './interfaces/hasNewPosts.interface';
 import PostDto from './dto/post.dto';
 import ResponseAllPostsInterface from './interfaces/ResponseAllPosts.interface';
+import ResponseInsertPostInterface from './interfaces/ResponseInsertPost.interface';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  insertPost(@Body() newPost: PostDto) {
+  insertPost(@Body() newPost: PostDto): Promise<ResponseInsertPostInterface> {
     return this.postService.insertPost(newPost);
   }
 
@@ -22,7 +23,7 @@ export class PostController {
       !timestamp.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?$/)
     ) {
       return {
-        success: false,
+        ok: false,
         hasPost: false,
         message: 'Timestamp inválido',
         posts: [],
@@ -32,13 +33,7 @@ export class PostController {
   }
 
   @Get('all')
-  async getAllPosts() {
-    try {
-      const response: ResponseAllPostsInterface =
-        await this.postService.returnAllPosts();
-      return response;
-    } catch (error) {
-      return error;
-    }
+  async getAllPosts(): Promise<ResponseAllPostsInterface> {
+    return await this.postService.returnAllPosts();
   }
 }
