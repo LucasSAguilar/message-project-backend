@@ -10,8 +10,15 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  insertPost(@Body() newPost: PostDto): Promise<ResponseInsertPostInterface> {
-    return this.postService.insertPost(newPost);
+  async insertPost(
+    @Body() newPost: PostDto,
+  ): Promise<ResponseInsertPostInterface> {
+    
+    try {
+      return await this.postService.insertPost(newPost);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @Get('refresh')

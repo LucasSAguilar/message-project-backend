@@ -16,6 +16,6 @@ export default class PostDto {
     content: string;
 
     @IsISO8601()
-    @Transform(({ value }) => new Date(value), { toClassOnly: true })
-    createdAt: Date;
+    createdAt: string;
+    
 }

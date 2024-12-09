@@ -16,6 +16,7 @@ export class PostService {
         .collection('posts')
         .find()
         .sort({ createdAt: -1 })
+        .limit(7)
         .toArray();
       return {
         ok: true,
@@ -34,8 +35,6 @@ export class PostService {
   async verifyNewPosts(timestamp: string): Promise<HasNewPostsInterface> {
     try {
       const db = this.databaseService.getDb();
-
-      console.log(new Date(timestamp) < new Date('2024-11-27T12:35:12.442Z'));
 
       const posts = await db
         .collection('posts')
